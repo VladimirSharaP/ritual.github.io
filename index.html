@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Ритуальные товары и услуги</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <style>
+        :root {
+            --bg-dark: #151515;
+            --bg-section: #1f1f1f;
+            --accent: #b89a5a;
+            --accent-light: #d7c38b;
+            --text-main: #f5f5f5;
+            --text-muted: #b0b0b0;
+            --danger: #c75151;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+        }
+
+        a {
+            color: var(--accent-light);
+            text-decoration: none;
+        }
+
+        header {
+            border-bottom: 1px solid #2b2b2b;
+            background: rgba(10, 10, 10, 0.96);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+        }
+
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .header-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 14px 0;
+        }
+
+        .logo {
+            font-size: 20px;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .header-contacts {
+            text-align: right;
+            font-size: 14px;
+        }
+
+        .header-contacts .phone {
+            font-size: 18px;
+            font-weight: 600;
+        }
+
+        nav {
+            display: flex;
+            gap: 18px;
+            font-size: 14px;
+        }
+
+        nav a {
+            padding: 4px 0;
+            position: relative;
+        }
+
+        nav a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -2px;
+            width: 0;
+            height: 1px;
+            background: var(--accent);
+            transition: width 0.2s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, #111111, #202020);
+            padding: 60px 0 50px;
+        }
+
+        .hero-inner {
+            display: grid;
+            grid-template-columns: minmax(0, 2.2fr) minmax(0, 1.6fr);
+            gap: 40px;
+            align-items: center;
+        }
+
+        .badge {
+            display: inline-block;
+            border: 1px solid #333;
+            border-radius: 999px;
+            padding: 4px 10px;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-bottom: 12px;
+        }
+
+        .hero-title {
+            font-size: 34px;
+            margin-bottom: 12px;
+        }
+
+        .hero-sub {
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+
+        .hero-list {
+            list-style: none;
+            margin-bottom: 24px;
+            color: var(--text-muted);
+        }
+
+        .hero-list li {
+            margin-bottom: 6px;
+        }
+
+        .hero-actions {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 10px 22px;
+            border-radius: 999px;
+            border: 1px solid transparent;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background: var(--accent);
+            color: #111;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background: var(--accent-light);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-main);
+            border-color: #444;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--accent);
+            color: var(--accent-light);
+        }
+
+        .hero-note {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .hero-panel {
+            background: rgba(12, 12, 12, 0.9);
+            border-radius: 12px;
+            padding: 18px 18px 16px;
+            border: 1px solid #252525;
+        }
+
+        .hero-panel h3 {
+            margin-bottom: 8px;
+            font-size: 16px;
+        }
+
+        .hero-panel p {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        .hero-panel .highlight {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed #333;
+            font-size: 13px;
+        }
+
+        .section {
+            padding: 40px 0 32px;
+            background: var(--bg-section);
+            border-top: 1px solid #222;
+        }
+
+        .section:nth-of-type(even) {
+            background: #181818;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            margin-bottom: 22px;
+            gap: 18px;
+        }
+
+        .section-title {
+            font-size: 22px;
+        }
+
+        .section-sub {
+            font-size: 14px;
+            color: var(--text-muted);
+            max-width: 520px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+        }
+
+        .card {
+            background: #101010;
+            border-radius: 10px;
+            padding: 16px 16px 14px;
+            border: 1px solid #262626;
+        }
+
+        .card-title {
+            font-size: 16px;
+            margin-bottom: 6px;
+        }
+
+        .card-meta {
+            font-size: 13px;
+            color: var(--text-muted);
+            margin-bottom: 10px;
+        }
+
+        .price {
+            font-weight: 600;
+            color: var(--accent-light);
+            margin-bottom: 10px;
+        }
+
+        .pill {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 999px;
+            background: #202020;
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            font-size: 14px;
+        }
+
+        .step-num {
+            font-size: 13px;
+            color: var(--accent-light);
+            margin-bottom: 4px;
+        }
+
+        .step {
+            padding: 12px 12px 10px;
+            border-radius: 10px;
+            background: #101010;
+            border: 1px solid #262626;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+            gap: 28px;
+            align-items: flex-start;
+        }
+
+        form {
+            display: grid;
+            gap: 10px;
+        }
+
+        label {
+            font-size: 13px;
+            color: var(--text-muted);
+        }
+
+        input, select, textarea {
+            width: 100%;
+            margin-top: 4px;
+            padding: 8px 10px;
+            border-radius: 8px;
+            border: 1px solid #343434;
+            background: #090909;
+            color: var(--text-main);
+            font-size: 14px;
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 70px;
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: var(--accent);
+        }
+
+        .form-footer {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            font-size: 12px;
+            color: var(--text-muted);
+        }
+
+        .form-status {
+            font-size: 13px;
+            min-height: 18px;
+        }
+
+        .form-status.error {
+            color: var(--danger);
+        }
+
+        .form-status.success {
+            color: var(--accent-light);
+        }
+
+        .contacts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            font-size: 14px;
+        }
+
+        .contacts-grid h4 {
+            margin-bottom: 6px;
+        }
+
+        .contacts-grid p {
+            color: var(--text-muted);
+        }
+
+        footer {
+            border-top: 1px solid #222;
+            padding: 16px 0 20px;
+            font-size: 12px;
+            color: var(--text-muted);
+            background: #101010;
+        }
+
+        footer .footer-inner {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        @media (max-width: 768px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+            nav {
+                display: none;
+            }
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+            .section {
+                padding: 28px 0 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+<header>
+    <div class="container header-inner">
+        <div class="logo">
+            <span>Вечная</span> Память
+        </div>
+
+        <nav>
+            <a href="#goods">Товары</a>
+            <a href="#services">Услуги</a>
+            <a href="#process">Как мы работаем</a>
+            <a href="#contacts">Контакты</a>
+        </nav>
+
+        <div class="header-contacts">
+            <div class="phone">+7 (800) 000‑00‑00</div>
+            <div>Круглосуточная линия помощи</div>
+        </div>
+    </div>
+</header>
+
+<section class="hero">
+    <div class="container hero-inner">
+        <div>
+            <div class="badge">Ритуальные товары и услуги 24/7</div>
+            <h1 class="hero-title">Помогаем с достойным прощанием в тяжёлый момент</h1>
+            <p class="hero-sub">
+                Полный комплекс ритуальных услуг, организация похорон под ключ, 
+                собственный склад ритуальных товаров и памятников.
+            </p>
+
+            <ul class="hero-list">
+                <li>Оперативный выезд агента в любую точку города.</li>
+                <li>Подбор и доставка гроба, венков, крестов, памятников.</li>
+                <li>Оформление документов и транспортировка.</li>
+            </ul>
+
+            <div class="hero-actions">
+                <a href="tel:+78000000000" class="btn btn-ghost">Позвонить сейчас</a>
+            </div>
+
+            <p class="hero-note">
+                Мы работаем бережно и конфиденциально, уважая традиции и пожелания семьи.
+            </p>
+        </div>
+
+        <aside class="hero-panel">
+            <h3>Срочный выезд агента — от 30 минут</h3>
+            <p>
+                Сообщите нам адрес и кратко опишите ситуацию — агент подъедет, 
+                поможет с выбором услуг, оформлением документов и расчётом стоимости.
+            </p>
+            <div class="highlight">
+                При онлайн‑заявке фиксируем стоимость на момент обращения и 
+                предоставляем подробную смету перед началом работ.
+            </div>
+        </aside>
+    </div>
+</section>
+
+<section id="goods" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Ритуальные товары со склада</h2>
+            </div>
+            <p class="section-sub">
+                Основные позиции всегда в наличии, возможен индивидуальный подбор по каталогам и фото, 
+                а также изготовление под заказ.
+            </p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-title">Гробы</div>
+                <div class="card-meta">Классические, элитные, православные, с отделкой тканью.</div>
+                <div class="price">от 9 900 ₽</div>
+                <span class="pill">В наличии на складе</span>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Венки и корзины</div>
+                <div class="card-meta">Живые и искусственные цветы, ленты с текстом.</div>
+                <div class="price">от 2 500 ₽</div>
+                <span class="pill">Изготовление за 2 часа</span>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Кресты и таблички</div>
+                <div class="card-meta">Деревянные и металлические кресты, индивидуальные таблички.</div>
+                <div class="price">от 3 500 ₽</div>
+                <span class="pill">Нанесение надписей</span>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Памятники</div>
+                <div class="card-meta">Гранит, мрамор, художественная гравировка и фотокерамика.</div>
+                <div class="price">от 35 000 ₽</div>
+                <span class="pill">Изготовление и установка</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="services" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Комплекс ритуальных услуг</h2>
+            </div>
+            <p class="section-sub">
+                Возьмём на себя организацию похорон полностью: от оформления документов 
+                до установки памятника и ухода за местом захоронения.
+            </p>
+        </div>
+
+        <div class="cards">
+            <div class="card">
+                <div class="card-title">Организация похорон под ключ</div>
+                <div class="card-meta">
+                    Планирование церемонии, подбор кладбища или крематория, катафальный транспорт, 
+                    сопровождение родных.
+                </div>
+                <div class="price">от 45 000 ₽</div>
+                <span class="pill">Популярный пакет</span>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Оформление документов</div>
+                <div class="card-meta">
+                    Свидетельство о смерти, справки, разрешения и иные необходимые документы.
+                </div>
+                <div class="price">от 5 000 ₽</div>
+                <span class="pill">Без очередей</span>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Транспортные услуги</div>
+                <div class="card-meta">
+                    Катафальный транспорт, перевозка по городу и межгород, встреча и проводы.
+                </div>
+                <div class="price">от 7 000 ₽</div>
+                <span class="pill">24/7</span>
+            </div>
+
+            <div class="card">
+                <div class="card-title">Установка памятников</div>
+                <div class="card-meta">
+                    Фундамент, монтаж, выравнивание, гарантия на произведённые работы.
+                </div>
+                <div class="price">индивидуально</div>
+                <span class="pill">Бесплатный выезд замерщика</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="process" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Как мы работаем</h2>
+            </div>
+            <p class="section-sub">
+                Стараемся максимально упростить процесс для родных: достаточно одного звонка 
+                или онлайн‑заявки, остальное мы берём на себя.
+            </p>
+        </div>
+
+        <div class="steps">
+            <div class="step">
+                <div class="step-num">Шаг 1</div>
+                <div>Вы оставляете заявку на сайте или звоните по круглосуточному телефону.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">Шаг 2</div>
+                <div>Агент консультирует, выезжает на адрес, предлагает варианты по бюджету и традициям.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">Шаг 3</div>
+                <div>Мы оформляем документы, бронируем зал, транспорт и готовим необходимые товары.</div>
+            </div>
+            <div class="step">
+                <div class="step-num">Шаг 4</div>
+                <div>Проводим церемонию, устанавливаем памятник и при необходимости оказываем последующее обслуживание.</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="request" class="section">
+    <div class="container">
+        <div class="form-grid">
+            <div>
+                <h3 style="margin-bottom:8px;">Связь с дежурным агентом</h3>
+                <p style="font-size:14px; color:var(--text-muted); margin-bottom:10px;">
+                    Если ситуация срочная, лучше сразу позвонить по телефону горячей линии — 
+                    это быстрее, чем ждать обратного звонка по заявке.
+                </p>
+                <p style="font-size:18px; margin-bottom:8px;">+7 (800) 000‑00‑00</p>
+                <p style="font-size:13px; color:var(--text-muted);">
+                    Звонок по России бесплатный, линия работает круглосуточно, без выходных.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section id="contacts" class="section">
+    <div class="container">
+        <div class="section-header">
+            <div>
+                <h2 class="section-title">Контакты и реквизиты</h2>
+            </div>
+            <p class="section-sub">
+                Офис для приёма посетителей, выставочный зал ритуальных товаров и 
+                образцы памятников доступны в рабочее время.
+            </p>
+        </div>
+
+        <div class="contacts-grid">
+            <div>
+                <h4>Офис и выставочный зал</h4>
+                <p>г. Ваш город, Ул. Памятная, д. 1, 1 этаж</p>
+            </div>
+            <div>
+                <h4>Телефон и почта</h4>
+                <p>Тел.: +7 (800) 000‑00‑00</p>
+                <p>E‑mail: info@example.ru</p>
+            </div>
+            <div>
+                <h4>Режим работы</h4>
+                <p>Офис: ежедневно с 9:00 до 20:00</p>
+                <p>Агенты и транспорт: круглосуточно</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container footer-inner">
+        <div>© 2025 «Вечная Память». Все права защищены.</div>
+        <div>Политика конфиденциальности · Согласие на обработку персональных данных</div>
+    </div>
+</footer>
+
+</body>
+</html>
